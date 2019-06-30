@@ -21,6 +21,7 @@ map <Tab> :bnext<cr>
 map <S-Tab> :bprev<cr>
 
 map ,e :FZ<cr>
+map ,g :GFiles?<cr>
 map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
 map `h <C-W>h
@@ -32,6 +33,7 @@ nmap ,N :set nonumber<cr>
 
 " Enable spell check
 nmap ss :setlocal spell spelllang=en_us<cr>
+" Use 'z=' to show suggesstions
 
 " Enable spell check for gitcommits 
 au FileType markdown,gitcommit setlocal spell spelllang=en_us
@@ -47,6 +49,7 @@ set noeol
 
 " Terminal mappings
 tnoremap <C-w> <C-\><C-n>
+tnoremap <Esc><Esc> <C-\><C-n>
 
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
@@ -62,6 +65,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-buftabline'
+Plug 'tpope/vim-eunuch'
 
 let g:buftabline_separators = 1
 let g:buftabline_indicators = 1
@@ -171,12 +175,13 @@ function! MaximizeToggle()
     only
   endif
 endfunction
-set nowritebackup
-set nobackup
-set noswapfile
+"set nowritebackup
+"set nobackup
+"set noswapfile
 
 
 "cmap H H
 "imap H H
 "cmap L L
 "imap L L
+
