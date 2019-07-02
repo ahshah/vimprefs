@@ -130,6 +130,12 @@ hi! BufTabLineActive    ctermbg=208 ctermfg=237  cterm=bold
 hi! BufTabLineHidden    ctermbg=152 ctermfg=black
 hi! BufTabLineHiddenAlt ctermbg=110 ctermfg=black   cterm=italic
 hi! BufTabLineFill      ctermbg=240 ctermfg=black
+
+
+hi! GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
+hi! GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
+hi! GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
+
 "#60
 "#103
 "#darkblue
