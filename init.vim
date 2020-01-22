@@ -1,18 +1,25 @@
-noremap H H
+colorscheme xoria256
+
 set mouse=
 set expandtab
 set shiftwidth=4
 set autochdir
 set ruler
 set nowrap
+set backspace=indent,eol,start
+set noeol "No automatically add a newline to modified files
+
+noremap H H
 nmap ,s :source ~/.config/nvim/init.vim
 nmap ,v :e! ~/.config/nvim/init.vim<cr>
 nmap ,h :GitGutterLineHighlightsToggle<cr>
 nmap ,bd :bp\|bd#<cr>
-colorscheme xoria256
 
-
-set backspace=indent,eol,start
+" Map Leader to <space><space>
+" Then map the global clipboard to easier to use keys
+let mapleader="  "
+noremap <Leader>y "*y
+noremap <Leader>p "*P
 
 " Next/Previous Buffer
 map <C-l> :bnext<cr>
@@ -26,38 +33,32 @@ map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
 map `h <C-W>h
 map `l <C-W>l
+"Disable EX mode
+map Q <Nop>
 
 " Show/Hide line numbers
-nmap ,n :set number<cr>
-nmap ,N :set nonumber<cr>
+nmap ,n :call ToggleNumbers()<cr>
 
 " Enable spell check
 nmap ss :setlocal spell spelllang=en_us<cr>
-" Use 'z=' to show suggesstions
+nmap <Leader>s :setlocal spell spelllang=en_us<cr>
+" Use 'z=' to show suggestions
 
-" Enable spell check for gitcommits 
+" Enable spell check for Git Commits 
 au FileType markdown,gitcommit setlocal spell spelllang=en_us
 
 " Toggle NERD  Tree
 nmap tt :NERDTreeToggle<cr>
-
-" Fix slow loading of  ruby files from syntax highlighting
-let g:ruby_default_path=['/usr/bin/ruby -W0']
-
-" Don't automatically add a newline to modified files
-set noeol
 
 " Terminal mappings
 tnoremap <C-w> <C-\><C-n>
 tnoremap <Esc><Esc> <C-\><C-n>
 
 
+" ***** Plugins ****************************************************************
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.config/nvim/plugged')
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-"Plug 'neomake/neomake'
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-fugitive'
@@ -66,25 +67,19 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-eunuch'
+" Initialize plugin system
+call plug#end()
+" ***** /Plugins ***************************************************************
 
+
+
+" Plugin Options """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Faster update time for git-gutter?
+set updatetime=25
 let g:buftabline_separators = 1
 let g:buftabline_indicators = 1
 let g:buftabline_numbers = 1
 
-" Faster update time for git-gutter?
-set updatetime=25
-
-" Initialize plugin system
-call plug#end()
-
-" Run Neomake on writes
-"autocmd! BufWritePost * Neomake
-" Debug Neomake
-"let g:neomake_verbose=3 
-" Write neomake to a log file
-"let g:neomake_logfile='/tmp/error.log'
-
-" Plugin Options """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -142,7 +137,6 @@ endif
 " Examples
 "let g:gitgutter_diff_base = '<commit SHA>'
 
-
 command! FZ call RunFZFromRoot()
 function! RunFZFromRoot()
     let CWD=getcwd()
@@ -155,8 +149,6 @@ function! RunFZFromRoot()
     "    echo "Not in an Android directory"
     "endif
 endfunction
-
-
 
 nnoremap ,o :call MaximizeToggle()<CR>
 
@@ -175,13 +167,11 @@ function! MaximizeToggle()
     only
   endif
 endfunction
-"set nowritebackup
-"set nobackup
-"set noswapfile
 
-
-"cmap H H
-"imap H H
-"cmap L L
-"imap L L
-
+function! ToggleNumbers()
+    if &number == 0
+        set number
+    else
+        set nonumber
+    endif
+endfunction
