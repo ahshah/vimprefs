@@ -2,11 +2,14 @@ noremap H H
 set mouse=
 set expandtab
 set shiftwidth=4
+set tabstop=4
 set autochdir
 set ruler
 set nowrap
-nmap ,s :source ~/.config/nvim/init.vim
-nmap ,v :e! ~/.config/nvim/init.vim<cr>
+
+nmap 's :source ~/.config/nvim/init.vim<cr>
+nmap 'v :e! ~/.config/nvim/init.vim<cr>
+
 nmap ,h :GitGutterLineHighlightsToggle<cr>
 nmap ,bd :bp\|bd#<cr>
 colorscheme xoria256
@@ -14,9 +17,11 @@ colorscheme xoria256
 
 set backspace=indent,eol,start
 
+if has('nvim')
+  let $GIT_EDITOR = 'nvr -cc split --remote-wait'
+endif
+
 " Next/Previous Buffer
-map <C-l> :bnext<cr>
-map <C-h> :bprev<cr>
 map <Tab> :bnext<cr>
 map <S-Tab> :bprev<cr>
 
@@ -24,7 +29,23 @@ map ,e :FZ<cr>
 map ,g :GFiles?<cr>
 map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
+
+" Remove the need to use ctrl-f and ctrl-u for page up page down navigation 
+map ,f <C-f>
+map ,u <C-u>
+map ,o <C-o>
+map ,O <C-o>
+" Remove the need to use ctrl-v for columular selection
+map ,v <C-v>
+
+" Split window command + Navigation
+map `t <C-W><C-V>:terminal<cr>
+map `v <C-W><C-V>
+map `s <C-W>s
+map `c <C-W>c
 map `h <C-W>h
+map `j <C-W>j
+map `k <C-W>k
 map `l <C-W>l
 
 " Show/Hide line numbers
@@ -40,9 +61,6 @@ au FileType markdown,gitcommit setlocal spell spelllang=en_us
 
 " Toggle NERD  Tree
 nmap tt :NERDTreeToggle<cr>
-
-" Fix slow loading of  ruby files from syntax highlighting
-let g:ruby_default_path=['/usr/bin/ruby -W0']
 
 " Don't automatically add a newline to modified files
 set noeol
@@ -104,6 +122,9 @@ let g:lightline = {
 map <C-j> ]czz
 map <C-k> [czz
 
+map <down> ]czz
+map <up> [czz
+
 " Ignore/Don't Ignore white spaces in diffs"""""""""""""""""""""""""""""""""""""
 command! WS  call s:WSOn()
 function! s:WSOn() 
@@ -156,10 +177,21 @@ function! RunFZFromRoot()
     "endif
 endfunction
 
+nnoremap ,m :call TestMaximizeToggle()<CR>
 
+function! TestMaximizeToggle()
+  if exists("g:maximize_session")
+      unlet g:maximize_session
+      echom "Closing down maximized session"
+      tabclose
+  else
+      let g:maximize_session = tempname()
+      echom "Maximizing session"
+      tabedit %
+  endif
+endfunction
 
-nnoremap ,o :call MaximizeToggle()<CR>
-
+" Deprecated
 function! MaximizeToggle()
   if exists("s:maximize_session")
     exec "source " . s:maximize_session
