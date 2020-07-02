@@ -26,6 +26,7 @@ noremap <Leader>p "*P
 if has('nvim')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 endif
+autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 
 " Next/Previous Buffer
 map <Tab> :bnext<cr>
@@ -45,14 +46,15 @@ map ,O <C-o>
 map ,v <C-v>
 
 " Split window command + Navigation
-map `t <C-W><C-V>:terminal<cr>
-map `v <C-W><C-V>
-map `s <C-W>s
-map `c <C-W>c
-map `h <C-W>h
-map `j <C-W>j
-map `k <C-W>k
-map `l <C-W>l
+nmap `t <C-W><C-V>:terminal<cr>
+nmap `v <C-W><C-V>
+nmap `s <C-W>s
+nmap `c <C-W>c
+nmap `h <C-W>h
+nmap `j <C-W>j
+nmap `k <C-W>k
+nmap `l <C-W>l
+nmap `bd :bp\|bd#<cr>
 "Disable EX mode
 map Q <Nop>
 
@@ -85,6 +87,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-eunuch'
 " Initialize plugin system
