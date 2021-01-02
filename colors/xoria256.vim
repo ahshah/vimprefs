@@ -55,7 +55,7 @@ hi PmenuSel     ctermfg=255 guifg=#eeeeee ctermbg=243 guibg=#767676
 hi PmenuSbar                              ctermbg=252 guibg=#d0d0d0
 hi PmenuThumb   ctermfg=243 guifg=#767676
 hi Search       ctermfg=0   guifg=#000000 ctermbg=149 guibg=#afdf5f
-hi SignColumn   ctermfg=248 guifg=#a8a8a8
+hi SignColumn   ctermfg=248 guifg=#a8a8a8 ctermbg=233 guibg=#121212
 hi SpecialKey   ctermfg=77  guifg=#5fdf5f
 hi SpellBad     ctermfg=160 guifg=fg      ctermbg=bg                cterm=underline               guisp=#df0000
 hi SpellCap     ctermfg=189 guifg=#dfdfff ctermbg=bg  guibg=bg      cterm=underline gui=underline
@@ -135,6 +135,11 @@ hi! BufTabLineFill      ctermbg=240 ctermfg=black
 hi! GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
 hi! GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
 hi! GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
+
+" hi Sneak ctermfg=black ctermbg=red guifg=black guibg=red 
+hi Sneak ctermfg=0   guifg=#000000 ctermbg=149 guibg=#afdf5f
+"hi SneakLabel ctermfg=0   guifg=#000000 ctermbg=184 guibg=#dfdf00
+hi SneakScope guifg=red guibg=yellow ctermfg=149 ctermbg=149
 
 "#60
 "#103

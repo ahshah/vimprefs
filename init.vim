@@ -11,6 +11,15 @@ set nowrap
 nmap 's :source ~/.config/nvim/init.vim<cr>
 nmap 'v :e! ~/.config/nvim/init.vim<cr>
 
+nnoremap ,t :Nuake<CR>
+inoremap ,t <C-\><C-n>:Nuake<CR>
+tnoremap ,t <C-\><C-n>:Nuake<CR>
+
+inoremap ,q <C-\><C-n>:NuakeLast<CR>
+tnoremap ,q <C-\><C-n>:NuakeLast<CR>
+nnoremap ,q :NuakeLast<CR>
+let g:nuake_position = 'left'
+
 set noeol "No automatically add a newline to modified files
 noremap H H
 
@@ -33,9 +42,9 @@ map <Tab> :bnext<cr>
 map <S-Tab> :bprev<cr>
 
 map ,e :FZ<cr>
-map ,g :GFiles?<cr>
 map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
+map `g :GFiles?<cr>
 
 " Remove the need to use ctrl-f and ctrl-u for page up page down navigation 
 map ,f <C-f>
@@ -46,6 +55,11 @@ map ,O <C-o>
 map ,v <C-v>
 
 " Split window command + Navigation
+nmap `1 1<C-W><C-W>
+nmap `2 2<C-W><C-W>
+nmap `3 3<C-W><C-W>
+nmap `4 4<C-W><C-W>
+
 nmap `t <C-W><C-V>:terminal<cr>
 nmap `v <C-W><C-V>
 nmap `s <C-W>s
@@ -55,6 +69,32 @@ nmap `j <C-W>j
 nmap `k <C-W>k
 nmap `l <C-W>l
 nmap `bd :bp\|bd#<cr>
+
+" Offload some of this to the right hand
+" Split window command + Navigation
+nmap +1 1<C-W><C-W>
+nmap +2 2<C-W><C-W>
+nmap +3 3<C-W><C-W>
+nmap +4 4<C-W><C-W>
+
+nmap +t <C-W><C-V>:terminal<cr>
+nmap +v <C-W><C-V>
+nmap +s <C-W>s
+nmap +c <C-W>c
+nmap +h <C-W>h
+nmap +j <C-W>j
+nmap +k <C-W>k
+nmap +l <C-W>l
+nmap +bd :bp\|bd#<cr>
+
+nmap <Left> <C-W>h
+nmap <Down> <C-W>j
+nmap <Up> <C-W>k
+nmap <Right> <C-W>l
+
+nmap ') ysiw)
+nmap `) ysiw)
+
 "Disable EX mode
 map Q <Nop>
 
@@ -62,7 +102,7 @@ map Q <Nop>
 nmap ,n :call ToggleNumbers()<cr>
 
 " Enable spell check
-nmap ss :setlocal spell spelllang=en_us<cr>
+nmap 'S :setlocal spell spelllang=en_us<cr>
 nmap <Leader>s :setlocal spell spelllang=en_us<cr>
 " Use 'z=' to show suggestions
 
@@ -74,7 +114,14 @@ nmap tt :NERDTreeToggle<cr>
 
 " Terminal mappings
 tnoremap <C-w> <C-\><C-n>
-tnoremap <Esc><Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
+tnoremap <C-v><Esc> <Esc>
+
+" Sneak options
+let g:sneak#label = 1
+
+" Now that we have sneak we can override () in visual mode
+vmap ) S)
 
 
 " ***** Plugins ****************************************************************
@@ -83,13 +130,17 @@ call plug#begin('~/.config/nvim/plugged')
 Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-gitgutter'
 Plug 'itchyny/lightline.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ap/vim-buftabline'
-Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-eunuch'                                 "File commands like Rename"
+Plug 'tpope/vim-surround' "Surround a word with parens
+Plug 'Lenovsky/nuake'
+Plug 'justinmk/vim-sneak'
+
 " Initialize plugin system
 call plug#end()
 " ***** /Plugins ***************************************************************
@@ -169,11 +220,6 @@ function! RunFZFromRoot()
     let ROOT=system("git rev-parse --show-toplevel")
     execute 'cd' ROOT
     execute 'FZF'
-
-    "let NWD=substitute(CWD, '^\(.*\/Android\/\).*', '\1', "")
-    "if CWD == NWD 
-    "    echo "Not in an Android directory"
-    "endif
 endfunction
 
 nnoremap ,m :call TestMaximizeToggle()<CR>
@@ -214,3 +260,11 @@ function! ToggleNumbers()
         set nonumber
     endif
 endfunction
+
+
+" Helper mappings: Go to opening brace of function
+" https://vim.fandom.com/wiki/Jumping_to_the_start_and_end_of_a_code_block
+map [[ :silent! eval search('{', 'b')<CR>w99[{
+map ][ :silent! eval search('}')<CR>b99]}
+map ]] j0[[%:silent! eval search('{')<CR>
+map [] k$][%:silent! eval search('}', 'b')<CR>
