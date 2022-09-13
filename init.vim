@@ -1,5 +1,6 @@
 colorscheme xoria256
 
+filetype on
 set mouse=
 set expandtab
 set shiftwidth=4
@@ -24,7 +25,6 @@ set noeol "No automatically add a newline to modified files
 noremap H H
 
 nmap ,h :GitGutterLineHighlightsToggle<cr>
-nmap ,bd :bp\|bd#<cr>
 
 " Map Leader to <space><space>
 " Then map the global clipboard to easier to use keys
@@ -36,6 +36,12 @@ if has('nvim')
   let $GIT_EDITOR = 'nvr -cc split --remote-wait'
 endif
 autocmd FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+function! SetVar()
+    set filetype=make
+endfunction
+au BufReadPost * if getline(2) =~ "- Makefile -" | call SetVar() | endif
+
+"autocmd FileType fzf silent! tunmap <Esc>
 
 " Next/Previous Buffer
 map <Tab> :bnext<cr>
@@ -45,6 +51,8 @@ map ,e :FZ<cr>
 map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
 map `g :GFiles?<cr>
+nmap `e :Buffers<cr>
+map ,b :Buffers<cr>
 
 " Remove the need to use ctrl-f and ctrl-u for page up page down navigation 
 map ,f <C-f>
@@ -135,11 +143,16 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'ap/vim-buftabline'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'                                 "File commands like Rename"
 Plug 'tpope/vim-surround' "Surround a word with parens
 Plug 'Lenovsky/nuake'
 Plug 'justinmk/vim-sneak'
+Plug 'will133/vim-dirdiff'
+Plug 'kana/vim-textobj-user' " Helper script for vim-textobj-user   https://www.vim.org/scripts/script.php?script_id=2100
+Plug 'kana/vim-textobj-line' " Help surround words with out newline https://www.vim.org/scripts/script.php?script_id=3886 
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Initialize plugin system
 call plug#end()
@@ -166,9 +179,10 @@ let g:lightline = {
       \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
       \ }
       \ }
+" DirDiff Plugin Options """""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:DirDiffExcludes = ".git,vendor"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Diff Section""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Next/Previous diff section
 map <C-j> ]czz
 map <C-k> [czz
@@ -201,6 +215,8 @@ function! SetDiffEnviron()
 endfunction
 set encoding=utf-8
 set list listchars=tab:→\ ,trail:·
+autocmd FileType go,make :set listchars=tab:\ \ ,trail:-,extends:>,precedes:<,nbsp:+
+autocmd FileType go,make :set noexpandtab
 
 if &diff
     colorscheme xoria256
