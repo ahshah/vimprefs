@@ -78,6 +78,16 @@ nmap `k <C-W>k
 nmap `l <C-W>l
 nmap `bd :bp\|bd#<cr>
 
+nmap `t :wincmd v<cr>:terminal<cr>
+nmap `v :wincmd v<cr>
+nmap `c :wincmd c<cr>
+nmap `h :wincmd h<cr>
+nmap `j :wincmd j<cr>
+nmap `k :wincmd k<cr>
+nmap `l :wincmd l<cr>
+" Disable C-w as its confusing
+nmap <C-w> <C-\> 
+
 " Offload some of this to the right hand
 " Split window command + Navigation
 nmap +1 1<C-W><C-W>
@@ -193,7 +203,7 @@ map <up> [czz
 " Ignore/Don't Ignore white spaces in diffs"""""""""""""""""""""""""""""""""""""
 command! WS  call s:WSOn()
 function! s:WSOn() 
-et
+    set diffopt-=iwhite
 endfunction
 command! NWS call s:WSOff()
 function! s:WSOff()
@@ -237,6 +247,9 @@ function! RunFZFromRoot()
     execute 'cd' ROOT
     execute 'FZF'
 endfunction
+
+" FZF does not close ,e dialog via escape in nvim
+autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
 
 nnoremap ,m :call TestMaximizeToggle()<CR>
 
