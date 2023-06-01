@@ -1,4 +1,8 @@
 # Set up 
+
 git remote add origin ssh://git@github.com/ahshah/vimprefs.git
+
 git config user.name <name>
 git config user.email <email>
+git pull origin master
+cp nvimrc ~/.nvimrc
