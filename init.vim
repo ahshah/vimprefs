@@ -44,13 +44,13 @@ au BufReadPost * if getline(2) =~ "- Makefile -" | call SetVar() | endif
 "autocmd FileType fzf silent! tunmap <Esc>
 
 " Next/Previous Buffer
-map <Tab> :bnext<cr>
-map <S-Tab> :bprev<cr>
+map <Tab> :tabnext<cr>
+map <S-Tab> :tabprev<cr>
 
 map ,e :FZ<cr>
+map ,g :GFiles?<cr>
 map ,d :setl bufhidden=delete<Bar>bnext <cr>
 map ,<space> zz
-map `g :GFiles?<cr>
 nmap `e :Buffers<cr>
 map ,b :Buffers<cr>
 
@@ -68,7 +68,8 @@ nmap `2 2<C-W><C-W>
 nmap `3 3<C-W><C-W>
 nmap `4 4<C-W><C-W>
 
-nmap `t <C-W><C-V>:terminal<cr>
+nmap `r <C-W><C-V>:terminal<cr>
+nmap `t :tabnew<cr>
 nmap `v <C-W><C-V>
 nmap `s <C-W>s
 nmap `c <C-W>c
@@ -78,7 +79,7 @@ nmap `k <C-W>k
 nmap `l <C-W>l
 nmap `bd :bp\|bd#<cr>
 
-nmap `t :wincmd v<cr>:terminal<cr>
+nmap `r :wincmd v<cr>:terminal<cr>
 nmap `v :wincmd v<cr>
 nmap `c :wincmd c<cr>
 nmap `h :wincmd h<cr>
@@ -95,7 +96,7 @@ nmap +2 2<C-W><C-W>
 nmap +3 3<C-W><C-W>
 nmap +4 4<C-W><C-W>
 
-nmap +t <C-W><C-V>:terminal<cr>
+nmap +r <C-W><C-V>:terminal<cr>
 nmap +v <C-W><C-V>
 nmap +s <C-W>s
 nmap +c <C-W>c
@@ -152,7 +153,7 @@ Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'ap/vim-buftabline'
+"Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-eunuch'                                 "File commands like Rename"
@@ -163,6 +164,7 @@ Plug 'will133/vim-dirdiff'
 Plug 'kana/vim-textobj-user' " Helper script for vim-textobj-user   https://www.vim.org/scripts/script.php?script_id=2100
 Plug 'kana/vim-textobj-line' " Help surround words with out newline https://www.vim.org/scripts/script.php?script_id=3886 
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'Shougo/deoplete.nvim'
 
 " Initialize plugin system
 call plug#end()
@@ -225,8 +227,8 @@ function! SetDiffEnviron()
 endfunction
 set encoding=utf-8
 set list listchars=tab:→\ ,trail:·
-autocmd FileType go,make :set listchars=tab:\ \ ,trail:-,extends:>,precedes:<,nbsp:+
-autocmd FileType go,make :set noexpandtab
+"autocmd FileType go,make :set listchars=tab:\ \ ,trail:-,extends:>,precedes:<,nbsp:+
+"autocmd FileType go,make :set noexpandtab
 
 if &diff
     colorscheme xoria256
