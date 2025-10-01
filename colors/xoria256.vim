@@ -78,8 +78,10 @@ hi VisualNOS    ctermfg=255 guifg=#eeeeee ctermbg=60  guibg=#5f5f87
 hi WildMenu     ctermfg=0   guifg=#000000 ctermbg=150 guibg=#afdf87 cterm=bold gui=bold
 
 "" Syntax highlighting {{{2
+hi String       guifg=#ffffaf guibg=NONE gui=NONE
+hi Boolean      guifg=#87afd7 guibg=NONE gui=NONE
 hi Comment      ctermfg=244 guifg=#808080
-hi Constant     ctermfg=229 guifg=#ffffaf
+hi Constant     guifg=#ff5f5f guibg=NONE gui=NONE
 hi Identifier   ctermfg=182 guifg=#dfafdf                           cterm=none
 hi Ignore       ctermfg=238 guifg=#444444
 hi Number       ctermfg=180 guifg=#dfaf87
@@ -98,6 +100,15 @@ hi diffAdd      ctermfg=bg  guifg=bg      ctermbg=151 guibg=#afdfaf
 hi diffDelete   ctermfg=bg  guifg=bg      ctermbg=246 guibg=#949494 cterm=none gui=none
 hi diffChange   ctermfg=bg  guifg=bg      ctermbg=181 guibg=#dfafaf
 hi diffText     ctermfg=bg  guifg=bg      ctermbg=174 guibg=#df8787 cterm=none gui=none
+
+""" C
+hi cConstant     guifg=#ffaf5f guibg=NONE gui=NONE
+
+""" Golang
+hi goPredefined  guifg=#ffaf5f guibg=NONE gui=NONE
+
+
+
 """ HTML {{{3
 " hi htmlTag      ctermfg=146  guifg=#afafdf
 " hi htmlEndTag   ctermfg=146  guifg=#afafdf
@@ -140,6 +151,12 @@ hi! GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
 hi Sneak ctermfg=0   guifg=#000000 ctermbg=149 guibg=#afdf5f
 "hi SneakLabel ctermfg=0   guifg=#000000 ctermbg=184 guibg=#dfdf00
 hi SneakScope guifg=red guibg=yellow ctermfg=149 ctermbg=149
+
+hi! ALEVirtualTextError ctermfg=208
+hi! ALEVirtualTextWarning ctermfg=yellow
+hi! ALEErrorSign ctermfg=white ctermbg=darkred
+"hi! ALEWarningSign ctermfg=white
+
 
 "#60
 "#103

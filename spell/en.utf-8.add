@@ -9,3 +9,17 @@ AlertManager
 Reader/!
 URL/!
 of/!
+physconns
+physconn
+of
+MsgPasser
+AuthStream
+SqlDefinition
+Query2Analytics
+InnerSql
+InnerSqls
+Query2
+aggregators
+aggregator
+Clickhouse
+SqlCommand

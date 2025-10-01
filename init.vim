@@ -21,19 +21,16 @@ inoremap ,t <C-\><C-n>:Nuake<CR>
 tnoremap ,t <C-\><C-n>:Nuake<CR>
 
 nnoremap ,<esc> :NuakeSwap<CR>
-inoremap ,<esc> <C-\><C-n>:NuakeSwap<CR>
 tnoremap ,<esc> <C-\><C-n>:NuakeSwap<CR>
 
 inoremap ,q <C-\><C-n>:NuakeLast<CR>
 tnoremap ,q <C-\><C-n>:NuakeLast<CR>
 nnoremap ,q :NuakeLast<CR>
+tnoremap <Esc><Esc> <C-\><C-n>
 let g:nuake_position = 'left'
 
 set noeol "No automatically add a newline to modified files
 noremap H H
-
-nmap ,d :GitGutterLineHighlightsToggle<cr>
-nmap ,G :GitGutterSignsToggle<cr>
 
 " Map Leader to <space><space>
 " Then map the global clipboard to easier to use keys
@@ -236,12 +233,19 @@ let g:lightline = {
 let g:DirDiffExcludes = ".git,vendor"
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nmap ,d :GitGutterLineHighlightsToggle<cr>
+nmap ,G :GitGutterSignsToggle<cr>
+
 " Next/Previous diff section
 map <C-j> ]czz
 map <C-k> [czz
 
 map <down> ]czz
 map <up> [czz
+
+nnoremap <expr> <C-j> &diff ? ']czz' : ':GitGutterNextHunk<cr>'
+nnoremap <expr> <C-k> &diff ? '[czz' : ':GitGutterPrevHunk<cr>'
+
 
 " Ignore/Don't Ignore white spaces in diffs"""""""""""""""""""""""""""""""""""""
 command! WS  call s:WSOn()
@@ -377,7 +381,6 @@ map ]] j0[[%:silent! eval search('{')<CR>
 map [] k$][%:silent! eval search('}', 'b')<CR>
 
 nnoremap ,. :call GoToPrevClosingBracket()<CR>i
-inoremap ,. <esc>:call GoToPrevClosingBracket()<CR>i
 function! GoToPrevClosingBracket()
     "let cur_char = getline('.')
     "let cur_char = substr(cur_char, col('.') - 1, 1)
