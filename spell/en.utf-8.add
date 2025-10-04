@@ -23,3 +23,9 @@ aggregators
 aggregator
 Clickhouse
 SqlCommand
+CBE
+ccache
+CMakeLists
+IDEs
+akamake
+toolchain

@@ -312,7 +312,9 @@ function! RunFZFromRoot()
 endfunction
 
 " FZF does not close ,e dialog via escape in nvim
-autocmd! FileType fzf tnoremap <buffer> <esc> <c-c>
+autocmd FileType fzf tnoremap <buffer> <Esc><Esc> <C-c>
+autocmd FileType fzf tnoremap <buffer> ,e <C-c>
+autocmd FileType fzf tnoremap <buffer> ,b <C-c>
 
 nnoremap ,m :call TestMaximizeToggle()<CR>
 
